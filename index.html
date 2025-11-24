@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="https://l.top4top.io/p_3615ljezv1.png">
+    <link rel="icon" type="image/png" href="https://l.top4top.io/p_3615ljezv1.png">
+
+    <meta property="og:title" content="اختر لونك - تم الصنع بواسطة حسن">
+    <meta property="og:description" content="اكتب رمز لون سداسي عشري أو اختر لونا من القائمة أدناه">
+    <meta property="og:image" content="https://l.top4top.io/p_3615ljezv1.png">
+    <meta property="og:type" content="website">
+    <meta name="description" content="اكتب رمز لون سداسي عشري أو اختر لونا من القائمة أدناه">
+
+    <meta name="theme-color" content="#ffffff" id="metaThemeColor">
+    
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Color Tool">
+
+    <title>اختر لونك - حسن</title>
+    <style>
+        /* --- الأساسيات --- */
+        * {
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            user-select: none;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            box-sizing: border-box;
+        }
+        
+        input[type="text"], .result-code {
+            user-select: text;
+        }
+
+        body {
+            font-family: 'Roboto', 'Segoe UI', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overscroll-behavior-y: contain; 
+        }
+
+        /* --- ستايلات الوضع الليلي --- */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        body.dark-mode .top-section {
+            background-color: #1e1e1e;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        body.dark-mode .header-info h1 { color: #ffffff !important; }
+        body.dark-mode .header-info h1 span { color: #cccccc !important; }
+        body.dark-mode .header-info p { color: #bbbbbb !important; }
+        
+        body.dark-mode .visitor-count { color: #ccc; background: rgba(255,255,255,0.1); }
+
+        /* تغيير لون أيقونات شريط الحالة في الوضع الليلي */
+        body.dark-mode .mockup-status {
+            color: #ffffff !important; 
+        }
+
+        body.dark-mode .tabs-scroll {
+            background-color: #1e1e1e;
+            border-bottom: 1px solid #333;
+        }
+        body.dark-mode input[type="text"] {
+            background-color: #2c2c2c;
+            color: white;
+            border-color: #444;
+        }
+        body.dark-mode .result-container {
+            background-color: #2c2c2c;
+            border-color: #444;
+        }
+        body.dark-mode .copy-btn, body.dark-mode .picker-btn {
+            background-color: #333;
+            color: white;
+            border-color: #444;
+        }
+        body.dark-mode .result-container .copy-btn {
+             border-right: 1px solid #444;
+        }
+        
+        body.dark-mode .copy-btn:active, body.dark-mode .picker-btn:active {
+            background-color: #444;
+        }
+        body.dark-mode .copy-btn.copied {
+            background-color: #4CAF50;
+        }
+        
+        body.dark-mode .shade-item {
+            color: #eee;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        body.dark-mode .phone-mockup {
+            border-color: #000;
+            background-color: #121212;
+        }
+        body.dark-mode .mockup-content {
+            background-color: #121212;
+            background-image: linear-gradient(#333 1px, transparent 1px);
+        }
+        body.dark-mode .modal-content {
+            background-color: #2c2c2c;
+            color: #fff;
+        }
+
+        /* --- زر تبديل الثيم --- */
+        .theme-btn {
+            position: absolute;
+            top: 15px; 
+            left: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 100;
+            padding: 5px;
+            border-radius: 50%;
+        }
+
+        /* --- تصميم الهيدر --- */
+        .top-section {
+            background: white;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 10;
+            position: relative;
+        }
+
+        .header-info {
+            text-align: right;
+            padding-left: 50px; 
+            margin-bottom: 15px;
+        }
+        .header-info h1 {
+            margin: 0;
+            font-size: 1.1em;
+            color: #333;
+            line-height: 1.4;
+        }
+        .header-info h1 span {
+            font-weight: normal;
+            font-size: 0.9em;
+            color: #666;
+            display: block; 
+        }
+        @media (min-width: 360px) {
+             .header-info h1 span { display: inline; } 
+        }
+        
+        .header-info p {
+            margin: 5px 0 0 0;
+            font-size: 0.85em;
+            color: #777;
+        }
+
+        .visitor-count {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 0.75em;
+            color: #666;
+            background: #eee;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+
+        .preview-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 5px; 
+            align-items: flex-start;
+            margin-top: 10px;
+        }
+
+        .phone-mockup {
+            width: 110px;
+            height: 170px;
+            background: white;
+            border-radius: 12px;
+            border: 4px solid #333;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        /* --- ستايل شريط الحالة الجديد --- */
+        .mockup-status {
+            height: 20px;
+            background: rgba(0,0,0,0.1);
+            width: 100%;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 6px;
+            font-size: 10px;
+            font-weight: bold;
+            font-family: sans-serif;
+            /* اللون الافتراضي (الوضع النهاري) */
+            color: #333;
+            transition: color 0.3s;
+        }
+        
+        .status-icons {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+        .status-icon-svg {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+        }
+        
+        .mockup-appbar {
+            height: 40px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            transition: background 0.2s;
+            justify-content: flex-start;
+        }
+        
+        .mockup-title {
+            font-size: 0.85em;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .mockup-content {
+            flex: 1;
+            background: #f5f5f5;
+            position: relative;
+            background-image: linear-gradient(#e0e0e0 1px, transparent 1px);
+            background-size: 100% 20px;
+            background-position: 0 10px;
+        }
+        
+        .mockup-fab {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            transition: background 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .controls-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .result-container {
+            display: flex;
+            background: #eee;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+            flex-direction: row-reverse;
+            margin-top: 5px; 
+            height: 40px; 
+        }
+
+        .result-code {
+            flex: 1;
+            padding: 8px 5px;
+            text-align: center;
+            font-family: monospace;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1em; 
+        }
+
+        .input-tools-row {
+            display: flex;
+            gap: 5px; 
+            margin-top: 5px; 
+        }
+
+        input[type="text"] {
+            flex: 1; 
+            padding: 0 10px;
+            text-align: center;
+            font-family: monospace;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            text-transform: uppercase;
+            font-size: 1.1em; 
+            height: 40px; 
+            font-weight: bold;
+        }
+
+        .picker-btn {
+            width: 40px; 
+            height: 40px; 
+            background: #e0e0e0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.3em; 
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .copy-btn {
+            background: #e0e0e0;
+            border: none;
+            border-right: 1px solid #ccc;
+            padding: 0 15px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .copy-btn.copied {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            margin-bottom: 2px;
+            font-weight: bold;
+        }
+        input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+            direction: ltr;
+        }
+
+        .color-picker-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* --- تعديل: إعادة الحجم الكبير للشريط --- */
+        .tabs-scroll {
+            display: flex;
+            overflow-x: auto;
+            background: white;
+            padding: 10px 5px; /* تمت زيادة الحشو العمودي */
+            scrollbar-width: none;
+            border-bottom: 1px solid #e0e0e0;
+            direction: ltr; 
+        }
+        /* --- تعديل: إعادة الحجم الكبير للأزرار --- */
+        .tab-btn {
+            flex: 0 0 auto;
+            padding: 8px 16px; /* تمت زيادة الحشو للأزرار */
+            margin: 0 4px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+        /* الستايل العام للزر النشط */
+        .tab-btn.active { transform: scale(1.05); border-color: #333; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+        
+        /* --- تعديل جديد: إزالة الضل تحديداً من زر السجل عند تفعيله --- */
+        .tab-btn.history-btn.active {
+            box-shadow: none;
+        }
+        
+        .text-dark { 
+            color: #333 !important; 
+            border: 1px solid #ccc;
+        }
+
+        .shades-list { flex: 1; overflow-y: auto; padding: 0; margin: 0; list-style: none; }
+        .shade-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 20px; color: white; cursor: pointer; font-weight: 500;
+            border-bottom: 1px solid rgba(0,0,0,0.05); direction: ltr;
+        }
+        .shade-hex { font-family: monospace; opacity: 0.9; }
+
+        /* --- Custom Color Picker Modal --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 2000;
+            display: none; align-items: center; justify-content: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: white; width: 90%; max-width: 320px;
+            border-radius: 12px; padding: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            display: flex; flex-direction: column; gap: 15px;
+        }
+        .modal-title { margin: 0; font-size: 1.1em; text-align: center; }
+        
+        .cp-sv-box {
+            width: 100%; height: 180px;
+            position: relative; cursor: crosshair;
+            border-radius: 4px; overflow: hidden;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+            margin-bottom: 5px;
+        }
+        .cp-cursor {
+            width: 12px; height: 12px; border-radius: 50%;
+            border: 2px solid white; box-shadow: 0 0 2px rgba(0,0,0,0.5);
+            position: absolute; transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        
+        .cp-hue-slider {
+            width: 100%; height: 15px;
+            -webkit-appearance: none; appearance: none;
+            background: linear-gradient(to right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+            border-radius: 10px; outline: none; margin-bottom: 5px;
+        }
+        .cp-hue-slider::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none;
+            width: 20px; height: 20px; border-radius: 50%;
+            background: white; border: 2px solid #ccc; cursor: pointer;
+        }
+
+        .cp-slider-row {
+            display: flex; align-items: center; gap: 10px;
+        }
+        .cp-sub-slider {
+            flex: 1; height: 12px; border-radius: 8px;
+            -webkit-appearance: none; appearance: none; outline: none;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .cp-sub-slider::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none;
+            width: 18px; height: 18px; border-radius: 50%;
+            background: white; border: 1px solid #ccc; cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .slider-icon { font-size: 0.8em; font-weight: bold; width: 20px; text-align: center; }
+
+        .modal-buttons { display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px; }
+        .btn-modal {
+            padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;
+        }
+        .btn-cancel { background: #eee; color: #333; }
+        .btn-confirm { background: #2196F3; color: white; }
+
+        /* --- ستايل زر تليكرام الجديد مع النص --- */
+        .telegram-row {
+            display: flex;
+            justify-content: flex-end; /* لجعله في نهاية الحاوية (اليسار في RTL) */
+            margin-top: 8px;
+        }
+        
+        .telegram-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #24A1DE; /* لون تليكرام الرسمي الحديث */
+            color: white;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 50px; /* شكل الكبسولة */
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        
+        .telegram-btn:active {
+            transform: scale(0.97);
+        }
+        
+        .telegram-text {
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-left: 8px; /* مسافة بين النص والأيقونة */
+            direction: ltr; /* لضمان ظهور المعرف بالانجليزية بشكل صحيح */
+        }
+
+        .telegram-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+        
+        /* تأثير الوضع الليلي */
+        body.dark-mode .telegram-btn {
+            background-color: #2196F3;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="top-section">
+        <button id="themeToggle" class="theme-btn">🌙</button>
+
+        <div class="header-info">
+            <h1>اختر لونك <span>- تم الصنع بواسطة حسن</span></h1>
+            <p>اكتب رمز لون سداسي عشري أو اختر لونا من القائمة أدناه</p>
+            <span class="visitor-count" id="visitorCountDisplay">عدد مستخدمي الأداة: ...</span>
+        </div>
+
+        <div class="preview-row">
+            
+            <div class="controls-area">
+                <div class="slider-label">
+                    <span>الشفافية (Alpha)</span>
+                    <span id="alphaVal">255</span>
+                </div>
+                <input type="range" id="alphaSlider" min="0" max="255" value="255">
+                
+                <div class="result-container">
+                    <div class="result-code" id="hexResult">#FFF44336</div>
+                    <button class="copy-btn" id="copyBtn" title="نسخ">📋</button>
+                </div>
+
+                <div class="input-tools-row">
+                    <input type="text" id="manualHex" value="F44336" maxlength="9">
+                    <button id="openPickerBtn" class="picker-btn" title="اختيار لون مخصص">🎨</button>
+                </div>
+
+                <div class="telegram-row">
+                    <a href="https://t.me/Hassan_Official_1" target="_blank" class="telegram-btn">
+                        <span class="telegram-text">@Hassan_Official_1</span>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42l10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l-.002.001l-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15l4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"></path>
+                        </svg>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="phone-mockup">
+                <div class="mockup-status" id="mockupStatus">
+                    <span class="status-time">12:30</span>
+                    <div class="status-icons">
+                        <svg class="status-icon-svg" viewBox="0 0 24 24"><path d="M12 21L24 6C21.3 3.8 17.5 2 12 2C6.5 2 2.7 3.8 0 6L12 21Z"/></svg>
+                        <svg class="status-icon-svg" viewBox="0 0 24 24"><path d="M17 4H15V2H9V4H7C5.9 4 5 4.9 5 6V18C5 19.1 5.9 20 7 20H17C18.1 20 19 19.1 19 18V6C19 4.9 18.1 4 17 4Z"/></svg>
+                    </div>
+                </div>
+
+                <div class="mockup-appbar" id="mockupAppBar">
+                    <div class="mockup-title" id="mockupTitleText">واجهة تجريبية</div>
+                </div>
+                <div class="mockup-content">
+                    <div class="mockup-fab" id="mockupFab">+</div>
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+
+    <div class="color-picker-area">
+        <div class="tabs-scroll" id="tabsContainer"></div>
+        <ul class="shades-list" id="shadesContainer"></ul>
+    </div>
+
+    <div class="modal-overlay" id="pickerModal">
+        <div class="modal-content">
+            <h3 class="modal-title">تخصيص اللون</h3>
+            
+            <div class="cp-sv-box" id="cpSVBox">
+                <div class="cp-cursor" id="cpCursor" style="top: 0; left: 100%;"></div>
+                <canvas id="cpCanvas" width="300" height="200" style="width:100%; height:100%;"></canvas>
+            </div>
+
+            <input type="range" id="cpHueSlider" class="cp-hue-slider" min="0" max="360" value="0">
+            
+            <div class="cp-slider-row">
+                <span class="slider-icon">S</span>
+                <input type="range" id="cpSatSlider" class="cp-sub-slider" min="0" max="100" value="100">
+            </div>
+
+            <div class="cp-slider-row" style="margin-top:5px;">
+                <span class="slider-icon">V</span>
+                <input type="range" id="cpValSlider" class="cp-sub-slider" min="0" max="100" value="100">
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+                <span id="cpPreviewHex">#FF0000</span>
+                <div id="cpPreviewColor" style="width:40px; height:40px; border-radius:50%; border:1px solid #ccc; background:#f00;"></div>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn-modal btn-cancel" id="cpCancelBtn">إلغاء</button>
+                <button class="btn-modal btn-confirm" id="cpConfirmBtn">اختيار</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const materialColors = {
+        'Red': { base: '#F44336', shades: [ ['#FFEBEE', '50'], ['#FFCDD2', '100'], ['#EF9A9A', '200'], ['#E57373', '300'], ['#EF5350', '400'], ['#F44336', '500'], ['#E53935', '600'], ['#D32F2F', '700'], ['#C62828', '800'], ['#B71C1C', '900'] ] },
+        'Pink': { base: '#E91E63', shades: [ ['#FCE4EC', '50'], ['#F8BBD0', '100'], ['#F48FB1', '200'], ['#F06292', '300'], ['#EC407A', '400'], ['#E91E63', '500'], ['#D81B60', '600'], ['#C2185B', '700'], ['#AD1457', '800'], ['#880E4F', '900'] ] },
+        'Purple': { base: '#9C27B0', shades: [ ['#F3E5F5', '50'], ['#E1BEE7', '100'], ['#CE93D8', '200'], ['#BA68C8', '300'], ['#AB47BC', '400'], ['#9C27B0', '500'], ['#8E24AA', '600'], ['#7B1FA2', '700'], ['#6A1B9A', '800'], ['#4A148C', '900'] ] },
+        'Deep Purple': { base: '#673AB7', shades: [ ['#EDE7F6', '50'], ['#D1C4E9', '100'], ['#B39DDB', '200'], ['#9575CD', '300'], ['#7E57C2', '400'], ['#673AB7', '500'], ['#5E35B1', '600'], ['#512DA8', '700'], ['#4527A0', '800'], ['#311B92', '900'] ] },
+        'Indigo': { base: '#3F51B5', shades: [ ['#E8EAF6', '50'], ['#C5CAE9', '100'], ['#9FA8DA', '200'], ['#7986CB', '300'], ['#5C6BC0', '400'], ['#3F51B5', '500'], ['#3949AB', '600'], ['#303F9F', '700'], ['#283593', '800'], ['#1A237E', '900'] ] },
+        'Blue': { base: '#2196F3', shades: [ ['#E3F2FD', '50'], ['#BBDEFB', '100'], ['#90CAF9', '200'], ['#64B5F6', '300'], ['#42A5F5', '400'], ['#2196F3', '500'], ['#1E88E5', '600'], ['#1976D2', '700'], ['#1565C0', '800'], ['#0D47A1', '900'] ] },
+        'Light Blue': { base: '#03A9F4', shades: [ ['#E1F5FE', '50'], ['#B3E5FC', '100'], ['#81D4FA', '200'], ['#4FC3F7', '300'], ['#29B6F6', '400'], ['#03A9F4', '500'], ['#039BE5', '600'], ['#0288D1', '700'], ['#0277BD', '800'], ['#01579B', '900'] ] },
+        'Cyan': { base: '#00BCD4', shades: [ ['#E0F7FA', '50'], ['#B2EBF2', '100'], ['#80DEEA', '200'], ['#4DD0E1', '300'], ['#26C6DA', '400'], ['#00BCD4', '500'], ['#00ACC1', '600'], ['#0097A7', '700'], ['#00838F', '800'], ['#006064', '900'] ] },
+        'Teal': { base: '#009688', shades: [ ['#E0F2F1', '50'], ['#B2DFDB', '100'], ['#80CBC4', '200'], ['#4DB6AC', '300'], ['#26A69A', '400'], ['#009688', '500'], ['#00897B', '600'], ['#00796B', '700'], ['#00695C', '800'], ['#004D40', '900'] ] },
+        'Green': { base: '#4CAF50', shades: [ ['#E8F5E9', '50'], ['#C8E6C9', '100'], ['#A5D6A7', '200'], ['#81C784', '300'], ['#66BB6A', '400'], ['#4CAF50', '500'], ['#43A047', '600'], ['#388E3C', '700'], ['#2E7D32', '800'], ['#1B5E20', '900'] ] },
+        'Light Green': { base: '#8BC34A', shades: [ ['#F1F8E9', '50'], ['#DCEDC8', '100'], ['#C5E1A5', '200'], ['#AED581', '300'], ['#9CCC65', '400'], ['#8BC34A', '500'], ['#7CB342', '600'], ['#689F38', '700'], ['#558B2F', '800'], ['#33691E', '900'] ], darkText: true },
+        'Lime': { base: '#CDDC39', shades: [ ['#F9FBE7', '50'], ['#F0F4C3', '100'], ['#E6EE9C', '200'], ['#DCE775', '300'], ['#D4E157', '400'], ['#CDDC39', '500'], ['#C0CA33', '600'], ['#AFB42B', '700'], ['#9E9D24', '800'], ['#827717', '900'] ], darkText: true },
+        'Yellow': { base: '#FFEB3B', shades: [ ['#FFFDE7', '50'], ['#FFF9C4', '100'], ['#FFF59D', '200'], ['#FFF176', '300'], ['#FFEE58', '400'], ['#FFEB3B', '500'], ['#FDD835', '600'], ['#FBC02D', '700'], ['#F9A825', '800'], ['#F57F17', '900'] ], darkText: true },
+        'Amber': { base: '#FFC107', shades: [ ['#FFF8E1', '50'], ['#FFECB3', '100'], ['#FFE082', '200'], ['#FFD54F', '300'], ['#FFCA28', '400'], ['#FFC107', '500'], ['#FFB300', '600'], ['#FFA000', '700'], ['#FF8F00', '800'], ['#FF6F00', '900'] ], darkText: true },
+        'Orange': { base: '#FF9800', shades: [ ['#FFF3E0', '50'], ['#FFE0B2', '100'], ['#FFCC80', '200'], ['#FFB74D', '300'], ['#FFA726', '400'], ['#FF9800', '500'], ['#FB8C00', '600'], ['#F57C00', '700'], ['#EF6C00', '800'], ['#E65100', '900'] ], darkText: true },
+        'Deep Orange': { base: '#FF5722', shades: [ ['#FBE9E7', '50'], ['#FFCCBC', '100'], ['#FFAB91', '200'], ['#FF8A65', '300'], ['#FF7043', '400'], ['#FF5722', '500'], ['#F4511E', '600'], ['#E64A19', '700'], ['#D84315', '800'], ['#BF360C', '900'] ] },
+        'Brown': { base: '#795548', shades: [ ['#EFEBE9', '50'], ['#D7CCC8', '100'], ['#BCAAA4', '200'], ['#8D6E63', '300'], ['#795548', '500'], ['#5D4037', '700'], ['#3E2723', '900'] ] },
+        'Grey': { base: '#9E9E9E', shades: [ ['#FAFAFA', '50'], ['#EEEEEE', '200'], ['#BDBDBD', '400'], ['#9E9E9E', '500'], ['#757575', '600'], ['#424242', '800'], ['#212121', '900'] ] },
+        'Blue Grey': { base: '#607D8B', shades: [ ['#ECEFF1', '50'], ['#CFD8DC', '100'], ['#B0BEC5', '200'], ['#90A4AE', '300'], ['#607D8B', '500'], ['#455A64', '700'], ['#263238', '900'] ] },
+        'Black': { base: '#000000', shades: [] },
+        'White': { base: '#FFFFFF', shades: [], darkText: true },
+    };
+
+    const tabsContainer = document.getElementById('tabsContainer');
+    const shadesContainer = document.getElementById('shadesContainer');
+    const manualHex = document.getElementById('manualHex');
+    const alphaSlider = document.getElementById('alphaSlider');
+    const hexResult = document.getElementById('hexResult');
+    const alphaValText = document.getElementById('alphaVal');
+    const copyBtn = document.getElementById('copyBtn');
+    
+    // عناصر المعاينة
+    const mockupAppBar = document.getElementById('mockupAppBar');
+    const mockupFab = document.getElementById('mockupFab');
+    const mockupTitleText = document.getElementById('mockupTitleText');
+    const mockupStatus = document.getElementById('mockupStatus'); 
+
+    // عناصر النافذة المنبثقة للبيكر
+    const openPickerBtn = document.getElementById('openPickerBtn');
+    const pickerModal = document.getElementById('pickerModal');
+    const cpSVBox = document.getElementById('cpSVBox');
+    const cpCanvas = document.getElementById('cpCanvas');
+    const cpCtx = cpCanvas.getContext('2d', { willReadFrequently: true });
+    
+    const cpHueSlider = document.getElementById('cpHueSlider');
+    const cpSatSlider = document.getElementById('cpSatSlider');
+    const cpValSlider = document.getElementById('cpValSlider');
+    
+    const cpCursor = document.getElementById('cpCursor');
+    const cpPreviewHex = document.getElementById('cpPreviewHex');
+    const cpPreviewColor = document.getElementById('cpPreviewColor');
+    const cpCancelBtn = document.getElementById('cpCancelBtn');
+    const cpConfirmBtn = document.getElementById('cpConfirmBtn');
+
+    // العنصر المسؤول عن لون المتصفح
+    const metaThemeColor = document.getElementById('metaThemeColor');
+
+    let colorHistory = [];
+    let isDarkMode = false; 
+    let currentPickerHue = 0;
+    let currentPickerSat = 1; // 0 to 1
+    let currentPickerVal = 1; // 0 to 1
+    let isDraggingCP = false;
+    
+    // متغير لتخزين الفئة الحالية
+    let currentCategory = 'Red';
+
+    function init() {
+        renderTabs();
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            isDarkMode = true;
+            document.body.classList.add('dark-mode');
+            themeToggle.innerText = '☀️';
+            metaThemeColor.setAttribute('content', '#1e1e1e');
+        } else {
+             metaThemeColor.setAttribute('content', '#ffffff');
+        }
+
+        const savedHistory = localStorage.getItem('colorHistory');
+        if (savedHistory) {
+            colorHistory = JSON.parse(savedHistory);
+        }
+
+        selectCategory('Red'); 
+        manualHex.value = 'F44336';
+        alphaSlider.value = 255;
+
+        initVisitorCounter();
+        updateTransparency();
+    }
+
+    function initVisitorCounter() {
+        const countDisplay = document.getElementById('visitorCountDisplay');
+        let count = localStorage.getItem('siteVisitCount');
+        if (!count) {
+            count = Math.floor(Math.random() * (1500 - 1200 + 1) + 1200);
+        } else {
+            count = parseInt(count) + 1;
+        }
+        localStorage.setItem('siteVisitCount', count);
+        countDisplay.innerText = "عدد مستخدمي الأداة: " + count.toLocaleString();
+    }
+
+    themeToggle.addEventListener('click', () => {
+        isDarkMode = !isDarkMode;
+        document.body.classList.toggle('dark-mode');
+        
+        if(isDarkMode) {
+            themeToggle.innerText = '☀️';
+            localStorage.setItem('theme', 'dark');
+            metaThemeColor.setAttribute('content', '#1e1e1e');
+        } else {
+            themeToggle.innerText = '🌙';
+            localStorage.setItem('theme', 'light');
+            metaThemeColor.setAttribute('content', '#ffffff');
+        }
+    });
+
+    function renderTabs() {
+        tabsContainer.innerHTML = '';
+        
+        // 1. إضافة زر السجل في البداية مع كلاس خاص
+        const historyBtn = document.createElement('div');
+        historyBtn.className = 'tab-btn history-btn'; // إضافة كلاس history-btn
+        historyBtn.innerText = 'Recent';
+        historyBtn.style.backgroundColor = '#9E9E9E'; // لون رمادي محايد
+        historyBtn.onclick = () => { selectCategory('History'); };
+        tabsContainer.appendChild(historyBtn);
+
+        // 2. إضافة باقي الألوان
+        for (const [name, data] of Object.entries(materialColors)) {
+            const btn = document.createElement('div');
+            btn.className = 'tab-btn';
+            btn.innerText = name;
+            btn.style.backgroundColor = data.base;
+            if (data.darkText) btn.classList.add('text-dark');
+            btn.onclick = () => { selectCategory(name); };
+            tabsContainer.appendChild(btn);
+        }
+    }
+
+    function selectCategory(categoryName) {
+        currentCategory = categoryName; // تحديث الفئة الحالية
+        
+        document.querySelectorAll('.tab-btn').forEach(b => {
+            b.classList.remove('active');
+            // التعامل مع زر السجل الذي يحمل النص العربي
+            if(categoryName === 'History' && b.innerText === 'السجل') b.classList.add('active');
+            else if(b.innerText === categoryName) b.classList.add('active');
+        });
+
+        shadesContainer.innerHTML = '';
+
+        // إذا تم اختيار السجل
+        if (categoryName === 'History') {
+            renderHistoryList();
+            return;
+        }
+
+        // إذا تم اختيار لون عادي
+        const categoryData = materialColors[categoryName];
+
+        const baseItem = document.createElement('li');
+        baseItem.className = 'shade-item'; 
+        baseItem.style.backgroundColor = categoryData.base;
+        if (categoryData.darkText || categoryName === 'White' || isLightColor(categoryData.base)) {
+            baseItem.style.color = '#333';
+        }
+        baseItem.innerHTML = `<span>${categoryName.toUpperCase()}</span><span class="shade-hex">${categoryData.base}</span>`;
+        baseItem.onclick = () => selectShade(categoryData.base, baseItem);
+        shadesContainer.appendChild(baseItem);
+
+        categoryData.shades.forEach(shade => {
+            const [hex, label] = shade;
+            const item = document.createElement('li');
+            item.className = 'shade-item';
+            item.style.backgroundColor = hex;
+            if (categoryData.darkText || categoryName === 'White' || isLightColor(hex)) {
+                item.style.color = '#333';
+            }
+            item.innerHTML = `<span>${categoryName} ${label}</span><span class="shade-hex">${hex}</span>`;
+            item.onclick = () => selectShade(hex, item);
+            shadesContainer.appendChild(item);
+        });
+    }
+
+    function renderHistoryList() {
+        // --- تعديل: إضافة زر مسح السجل في البداية ---
+        const clearBtnLi = document.createElement('li');
+        clearBtnLi.className = 'shade-item';
+        clearBtnLi.style.backgroundColor = '#fff';
+        clearBtnLi.style.color = '#D32F2F';
+        clearBtnLi.style.justifyContent = 'center';
+        clearBtnLi.style.fontWeight = 'bold';
+        // تعديل: تغيير الحدود لتكون في الأسفل لأن الزر صار في الأعلى
+        clearBtnLi.style.borderBottom = '1px solid #ddd'; 
+        
+        // تعديل بسيط للوضع الليلي لزر المسح
+        if (isDarkMode) {
+            clearBtnLi.style.backgroundColor = '#333';
+            clearBtnLi.style.color = '#EF5350';
+            clearBtnLi.style.borderBottom = '1px solid #444';
+        }
+
+        clearBtnLi.innerHTML = '<span>🗑️ مسح السجل بالكامل</span>';
+        clearBtnLi.onclick = () => {
+            if(confirm('هل أنت متأكد من مسح كل السجل؟')) {
+                localStorage.removeItem('colorHistory');
+                colorHistory = [];
+                renderHistoryList(); // إعادة رسم القائمة وهي فارغة
+            }
+        };
+        shadesContainer.appendChild(clearBtnLi);
+        // -------------------------------------------
+
+        if (colorHistory.length === 0) {
+            const emptyMsg = document.createElement('li');
+            emptyMsg.style.padding = '20px';
+            emptyMsg.style.textAlign = 'center';
+            emptyMsg.style.color = '#888';
+            emptyMsg.innerText = 'السجل فارغ حالياً';
+            shadesContainer.appendChild(emptyMsg);
+            return;
+        }
+
+        colorHistory.forEach(item => {
+            const li = document.createElement('li');
+            li.className = 'shade-item';
+            li.style.backgroundColor = item.rgba; // استخدام RGBA لإظهار الشفافية
+            
+            // تحديد لون النص بناءً على سطوع اللون الأساسي
+            if (isLightColor(item.baseHex || '#FFFFFF')) {
+                li.style.color = '#333';
+            } else {
+                li.style.color = '#fff';
+            }
+
+            li.innerHTML = `<span>${item.hex}</span><span class="shade-hex">Alpha: ${item.alphaVal}</span>`;
+            li.onclick = () => {
+                manualHex.value = item.baseHex;
+                alphaSlider.value = item.alphaVal;
+                updateTransparency();
+                // تأثير بصري عند النقر
+                li.style.opacity = '0.5';
+                setTimeout(()=> li.style.opacity = '1', 100);
+            };
+            shadesContainer.appendChild(li);
+        });
+    }
+
+    function selectShade(hex, element) {
+        manualHex.value = hex.replace('#', '');
+        alphaSlider.value = 255; 
+        updateTransparency();
+        addToHistory();
+        element.style.opacity = '0.5';
+        setTimeout(()=> element.style.opacity = '1', 100);
+    }
+
+    function isLightColor(hex) {
+        hex = hex.replace('#','');
+        let r = parseInt(hex.substr(0,2),16);
+        let g = parseInt(hex.substr(2,2),16);
+        let b = parseInt(hex.substr(4,2),16);
+        let yiq = ((r*299)+(g*587)+(b*114))/1000;
+        return (yiq >= 200);
+    }
+
+    function updateTransparency() {
+        let rawInput = manualHex.value.trim().toUpperCase();
+        let cleanHex = rawInput.replace(/#/g, '');
+
+        if (cleanHex.length === 8) {
+            let alphaPart = cleanHex.substring(0, 2);
+            let colorPart = cleanHex.substring(2, 8);
+
+            let alphaVal = parseInt(alphaPart, 16);
+            if (!isNaN(alphaVal)) {
+                alphaSlider.value = alphaVal;
+            }
+
+            manualHex.value = colorPart; 
+            cleanHex = colorPart;
+        }
+
+        if (cleanHex.length < 3) return;
+
+        let hexForCalc = cleanHex.substring(0, 6);
+        while(hexForCalc.length < 6) { hexForCalc += "0"; }
+
+        let alpha = parseInt(alphaSlider.value);
+        let alphaHex = alpha.toString(16).toUpperCase();
+        if (alphaHex.length === 1) alphaHex = "0" + alphaHex;
+
+        alphaValText.innerText = alpha;
+        hexResult.innerText = "#" + alphaHex + hexForCalc;
+
+        let r = parseInt(hexForCalc.substring(0,2), 16);
+        let g = parseInt(hexForCalc.substring(2,4), 16);
+        let b = parseInt(hexForCalc.substring(4,6), 16);
+        let rgba = `rgba(${r},${g},${b},${alpha/255})`;
+        
+        mockupAppBar.style.backgroundColor = rgba;
+        mockupFab.style.backgroundColor = rgba;
+        
+        if(isLightColor(hexForCalc)) {
+            mockupTitleText.style.color = "#333"; 
+            mockupFab.style.color = "#333";
+        } else {
+            mockupTitleText.style.color = "#fff";
+            mockupFab.style.color = "#fff";
+        }
+        
+        resetCopyBtn();
+    }
+
+    function addToHistory() {
+        let currentFullHex = hexResult.innerText;
+        let cleanHex = manualHex.value.replace(/#/g,'').substring(0,6);
+        while(cleanHex.length < 6) { cleanHex += "0"; }
+
+        let r = parseInt(cleanHex.substring(0,2), 16);
+        let g = parseInt(cleanHex.substring(2,4), 16);
+        let b = parseInt(cleanHex.substring(4,6), 16);
+        let alpha = parseInt(alphaSlider.value) / 255;
+        let rgba = `rgba(${r},${g},${b},${alpha})`;
+
+        if (colorHistory.length > 0 && colorHistory[0].hex === currentFullHex) return;
+
+        colorHistory.unshift({
+            hex: currentFullHex,
+            rgba: rgba,
+            alphaVal: alphaSlider.value,
+            baseHex: cleanHex
+        });
+
+        // زيادة عدد العناصر المحفوظة قليلاً بما أنها صارت قائمة
+        if (colorHistory.length > 15) colorHistory.pop();
+        
+        localStorage.setItem('colorHistory', JSON.stringify(colorHistory));
+        
+        // إذا كان المستخدم فاتح تبويب السجل، نحدث القائمة فوراً
+        if (currentCategory === 'History') {
+            renderHistoryList();
+        }
+    }
+
+    function resetCopyBtn() {
+        copyBtn.innerText = "📋";
+        copyBtn.classList.remove('copied');
+    }
+
+    copyBtn.addEventListener('click', () => {
+        const textToCopy = hexResult.innerText;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            copyBtn.innerText = "✔";
+            copyBtn.classList.add('copied');
+            setTimeout(resetCopyBtn, 1500);
+            addToHistory();
+        }).catch(err => console.error('فشل النسخ', err));
+    });
+
+    manualHex.addEventListener('input', updateTransparency);
+    alphaSlider.addEventListener('input', updateTransparency);
+
+    /* =========================================
+       MATH-BASED HSV COLOR PICKER LOGIC
+       ========================================= */
+    
+    function hsvToRgb(h, s, v) {
+        var r, g, b;
+        var i = Math.floor(h * 6);
+        var f = h * 6 - i;
+        var p = v * (1 - s);
+        var q = v * (1 - f * s);
+        var t = v * (1 - (1 - f) * s);
+        switch (i % 6) {
+            case 0: r = v, g = t, b = p; break;
+            case 1: r = q, g = v, b = p; break;
+            case 2: r = p, g = v, b = t; break;
+            case 3: r = p, g = q, b = v; break;
+            case 4: r = t, g = p, b = v; break;
+            case 5: r = v, g = p, b = q; break;
+        }
+        return {
+            r: Math.round(r * 255),
+            g: Math.round(g * 255),
+            b: Math.round(b * 255)
+        };
+    }
+
+    function rgbToHsv(r, g, b) {
+        r /= 255, g /= 255, b /= 255;
+        var max = Math.max(r, g, b), min = Math.min(r, g, b);
+        var h, s, v = max;
+        var d = max - min;
+        s = max == 0 ? 0 : d / max;
+        if (max == min) { h = 0; } 
+        else {
+            switch (max) {
+                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                case g: h = (b - r) / d + 2; break;
+                case b: h = (r - g) / d + 4; break;
+            }
+            h /= 6;
+        }
+        return { h: h * 360, s: s, v: v };
+    }
+
+    function hexToRgb(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
+    }
+
+    function drawCP(hue) {
+        cpCtx.clearRect(0,0, cpCanvas.width, cpCanvas.height);
+        
+        cpCtx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+        cpCtx.fillRect(0, 0, cpCanvas.width, cpCanvas.height);
+        
+        let grdWhite = cpCtx.createLinearGradient(0, 0, cpCanvas.width, 0);
+        grdWhite.addColorStop(0, 'rgba(255,255,255,1)');
+        grdWhite.addColorStop(1, 'rgba(255,255,255,0)');
+        cpCtx.fillStyle = grdWhite;
+        cpCtx.fillRect(0, 0, cpCanvas.width, cpCanvas.height);
+        
+        let grdBlack = cpCtx.createLinearGradient(0, 0, 0, cpCanvas.height);
+        grdBlack.addColorStop(0, 'rgba(0,0,0,0)');
+        grdBlack.addColorStop(1, 'rgba(0,0,0,1)');
+        cpCtx.fillStyle = grdBlack;
+        cpCtx.fillRect(0, 0, cpCanvas.width, cpCanvas.height);
+
+        updateSliderGradients(hue);
+    }
+
+    function updateSliderGradients(hue) {
+        cpSatSlider.style.background = `linear-gradient(to right, #ffffff, hsl(${hue}, 100%, 50%))`;
+        let rgbFullVal = hsvToRgb(hue/360, currentPickerSat, 1);
+        let fullValColor = `rgb(${rgbFullVal.r}, ${rgbFullVal.g}, ${rgbFullVal.b})`;
+        cpValSlider.style.background = `linear-gradient(to right, #000000, ${fullValColor})`;
+    }
+
+    function updateColorFromValues() {
+        let rgb = hsvToRgb(currentPickerHue/360, currentPickerSat, currentPickerVal);
+        let hex = "#" + ((1 << 24) + (rgb.r << 16) + (rgb.g << 8) + rgb.b).toString(16).slice(1).toUpperCase();
+        cpPreviewHex.innerText = hex;
+        cpPreviewColor.style.backgroundColor = hex;
+        updateSliderGradients(currentPickerHue);
+    }
+
+    function syncCursorToValues() {
+        let rect = cpSVBox.getBoundingClientRect();
+        let w = rect.width || 300;
+        let h = rect.height || 180;
+        let x = currentPickerSat * w;
+        let y = (1 - currentPickerVal) * h;
+        cpCursor.style.left = x + 'px';
+        cpCursor.style.top = y + 'px';
+    }
+
+    openPickerBtn.addEventListener('click', () => {
+        pickerModal.classList.add('active');
+        let currentHex = manualHex.value;
+        if(currentHex.indexOf('#') === -1) currentHex = '#' + currentHex;
+        let rgb = hexToRgb(currentHex);
+        if(rgb) {
+            let hsv = rgbToHsv(rgb.r, rgb.g, rgb.b);
+            currentPickerHue = hsv.h;
+            currentPickerSat = hsv.s;
+            currentPickerVal = hsv.v;
+        }
+        cpHueSlider.value = currentPickerHue;
+        cpSatSlider.value = currentPickerSat * 100;
+        cpValSlider.value = currentPickerVal * 100;
+        drawCP(currentPickerHue);
+        syncCursorToValues();
+        updateColorFromValues();
+    });
+
+    cpHueSlider.addEventListener('input', (e) => {
+        currentPickerHue = parseFloat(e.target.value);
+        drawCP(currentPickerHue);
+        updateColorFromValues();
+    });
+
+    cpSatSlider.addEventListener('input', (e) => {
+        currentPickerSat = parseFloat(e.target.value) / 100;
+        syncCursorToValues();
+        updateColorFromValues();
+    });
+
+    cpValSlider.addEventListener('input', (e) => {
+        currentPickerVal = parseFloat(e.target.value) / 100;
+        syncCursorToValues();
+        updateColorFromValues();
+    });
+
+    function handleBoxMove(e) {
+        if (!isDraggingCP) return;
+        e.preventDefault(); 
+        let clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        let clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        
+        let rect = cpSVBox.getBoundingClientRect();
+        let x = clientX - rect.left;
+        let y = clientY - rect.top;
+
+        x = Math.max(0, Math.min(x, rect.width));
+        y = Math.max(0, Math.min(y, rect.height));
+
+        currentPickerSat = x / rect.width;
+        currentPickerVal = 1 - (y / rect.height);
+        
+        cpSatSlider.value = currentPickerSat * 100;
+        cpValSlider.value = currentPickerVal * 100;
+        
+        cpCursor.style.left = x + 'px';
+        cpCursor.style.top = y + 'px';
+        
+        updateColorFromValues();
+    }
+
+    cpSVBox.addEventListener('mousedown', (e) => { isDraggingCP = true; handleBoxMove(e); });
+    cpSVBox.addEventListener('touchstart', (e) => { isDraggingCP = true; handleBoxMove(e); });
+
+    window.addEventListener('mousemove', handleBoxMove);
+    window.addEventListener('touchmove', handleBoxMove, {passive: false});
+    window.addEventListener('mouseup', () => { isDraggingCP = false; });
+    window.addEventListener('touchend', () => { isDraggingCP = false; });
+
+    cpCancelBtn.addEventListener('click', () => {
+        pickerModal.classList.remove('active');
+    });
+
+    cpConfirmBtn.addEventListener('click', () => {
+        manualHex.value = cpPreviewHex.innerText.replace('#', '');
+        updateTransparency();
+        addToHistory();
+        pickerModal.classList.remove('active');
+    });
+
+    init();
+
+</script>
+
+</body>
+</html>
