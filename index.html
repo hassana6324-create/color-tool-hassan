@@ -688,18 +688,32 @@
     // متغير لتخزين الفئة الحالية
     let currentCategory = 'Red';
 
+    // --- دالة الربط مع التطبيق ---
+    function updateAppTheme(mode) {
+        if (typeof AndroidApp !== 'undefined' && AndroidApp !== null) {
+            AndroidApp.setStatusBarColor(mode);
+        }
+    }
+
     function init() {
         renderTabs();
 
         const savedTheme = localStorage.getItem('theme');
+        let currentMode = 'light'; // الافتراضي
+
         if (savedTheme === 'dark') {
             isDarkMode = true;
             document.body.classList.add('dark-mode');
             themeToggle.innerText = '☀️';
             metaThemeColor.setAttribute('content', '#1e1e1e');
+            currentMode = 'dark';
         } else {
              metaThemeColor.setAttribute('content', '#ffffff');
+             currentMode = 'light';
         }
+        
+        // --- إرسال الوضع الحالي للتطبيق عند الفتح ---
+        updateAppTheme(currentMode);
 
         const savedHistory = localStorage.getItem('colorHistory');
         if (savedHistory) {
@@ -734,10 +748,16 @@
             themeToggle.innerText = '☀️';
             localStorage.setItem('theme', 'dark');
             metaThemeColor.setAttribute('content', '#1e1e1e');
+            
+            // --- إرسال الوضع الليلي للتطبيق ---
+            updateAppTheme('dark');
         } else {
             themeToggle.innerText = '🌙';
             localStorage.setItem('theme', 'light');
             metaThemeColor.setAttribute('content', '#ffffff');
+            
+            // --- إرسال الوضع النهاري للتطبيق ---
+            updateAppTheme('light');
         }
     });
 
