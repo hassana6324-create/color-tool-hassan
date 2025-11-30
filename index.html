@@ -62,7 +62,6 @@
         
         body.dark-mode .visitor-count { color: #ccc; background: rgba(255,255,255,0.1); }
 
-        /* تغيير لون أيقونات شريط الحالة في الوضع الليلي */
         body.dark-mode .mockup-status {
             color: #ffffff !important; 
         }
@@ -196,7 +195,6 @@
             flex-shrink: 0;
         }
 
-        /* --- ستايل شريط الحالة الجديد --- */
         .mockup-status {
             height: 20px;
             background: rgba(0,0,0,0.1);
@@ -209,7 +207,6 @@
             font-size: 10px;
             font-weight: bold;
             font-family: sans-serif;
-            /* اللون الافتراضي (الوضع النهاري) */
             color: #333;
             transition: color 0.3s;
         }
@@ -368,20 +365,19 @@
             overflow: hidden;
         }
 
-        /* --- تعديل: إعادة الحجم الكبير للشريط --- */
         .tabs-scroll {
             display: flex;
             overflow-x: auto;
             background: white;
-            padding: 10px 5px; /* تمت زيادة الحشو العمودي */
+            padding: 10px 5px; 
             scrollbar-width: none;
             border-bottom: 1px solid #e0e0e0;
             direction: ltr; 
         }
-        /* --- تعديل: إعادة الحجم الكبير للأزرار --- */
+        
         .tab-btn {
             flex: 0 0 auto;
-            padding: 8px 16px; /* تمت زيادة الحشو للأزرار */
+            padding: 8px 16px;
             margin: 0 4px;
             border-radius: 4px;
             cursor: pointer;
@@ -390,13 +386,8 @@
             font-size: 0.9em;
             text-transform: uppercase;
         }
-        /* الستايل العام للزر النشط */
         .tab-btn.active { transform: scale(1.05); border-color: #333; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
-        
-        /* --- تعديل جديد: إزالة الضل تحديداً من زر السجل عند تفعيله --- */
-        .tab-btn.history-btn.active {
-            box-shadow: none;
-        }
+        .tab-btn.history-btn.active { box-shadow: none; }
         
         .text-dark { 
             color: #333 !important; 
@@ -404,12 +395,32 @@
         }
 
         .shades-list { flex: 1; overflow-y: auto; padding: 0; margin: 0; list-style: none; }
+        
+        /* --- ستايل العنصر العادي --- */
         .shade-item {
             display: flex; justify-content: space-between; align-items: center;
             padding: 15px 20px; color: white; cursor: pointer; font-weight: 500;
             border-bottom: 1px solid rgba(0,0,0,0.05); direction: ltr;
+            transition: background-color 0.2s; /* مهم للانيميشن */
         }
-        .shade-hex { font-family: monospace; opacity: 0.9; }
+        
+        /* --- كلاس الانيميشن عند النسخ (مثل موقعك الثاني) --- */
+        .copy-feedback-success {
+            background-color: #4CAF50 !important; /* خلفية خضراء */
+            color: #ffffff !important;           /* نص أبيض */
+            border-color: #388E3C !important;
+        }
+        /* اجبار العناصر الداخلية انها تصير بيضاء */
+        .copy-feedback-success span {
+            color: #ffffff !important;
+        }
+
+        .shade-hex { 
+            font-family: monospace; 
+            opacity: 0.9; 
+            padding: 4px 6px;
+            border-radius: 4px;
+        }
 
         /* --- Custom Color Picker Modal --- */
         .modal-overlay {
@@ -476,10 +487,9 @@
         .btn-cancel { background: #eee; color: #333; }
         .btn-confirm { background: #2196F3; color: white; }
 
-        /* --- ستايل زر تليكرام الجديد مع النص --- */
         .telegram-row {
             display: flex;
-            justify-content: flex-end; /* لجعله في نهاية الحاوية (اليسار في RTL) */
+            justify-content: flex-end; 
             margin-top: 8px;
         }
         
@@ -487,11 +497,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #24A1DE; /* لون تليكرام الرسمي الحديث */
+            background-color: #24A1DE; 
             color: white;
             text-decoration: none;
             padding: 6px 14px;
-            border-radius: 50px; /* شكل الكبسولة */
+            border-radius: 50px; 
             transition: transform 0.2s, background-color 0.2s;
         }
         
@@ -502,8 +512,8 @@
         .telegram-text {
             font-weight: bold;
             font-size: 0.9em;
-            margin-left: 8px; /* مسافة بين النص والأيقونة */
-            direction: ltr; /* لضمان ظهور المعرف بالانجليزية بشكل صحيح */
+            margin-left: 8px; 
+            direction: ltr; 
         }
 
         .telegram-btn svg {
@@ -512,7 +522,6 @@
             fill: white;
         }
         
-        /* تأثير الوضع الليلي */
         body.dark-mode .telegram-btn {
             background-color: #2196F3;
         }
@@ -624,7 +633,7 @@
         'Red': { base: '#F44336', shades: [ ['#FFEBEE', '50'], ['#FFCDD2', '100'], ['#EF9A9A', '200'], ['#E57373', '300'], ['#EF5350', '400'], ['#F44336', '500'], ['#E53935', '600'], ['#D32F2F', '700'], ['#C62828', '800'], ['#B71C1C', '900'] ] },
         'Pink': { base: '#E91E63', shades: [ ['#FCE4EC', '50'], ['#F8BBD0', '100'], ['#F48FB1', '200'], ['#F06292', '300'], ['#EC407A', '400'], ['#E91E63', '500'], ['#D81B60', '600'], ['#C2185B', '700'], ['#AD1457', '800'], ['#880E4F', '900'] ] },
         'Purple': { base: '#9C27B0', shades: [ ['#F3E5F5', '50'], ['#E1BEE7', '100'], ['#CE93D8', '200'], ['#BA68C8', '300'], ['#AB47BC', '400'], ['#9C27B0', '500'], ['#8E24AA', '600'], ['#7B1FA2', '700'], ['#6A1B9A', '800'], ['#4A148C', '900'] ] },
-        'Deep Purple': { base: '#673AB7', shades: [ ['#EDE7F6', '50'], ['#D1C4E9', '100'], ['#B39DDB', '200'], ['#9575CD', '300'], ['#7E57C2', '400'], ['#673AB7', '500'], ['#5E35B1', '600'], ['#512DA8', '700'], ['#4527A0', '800'], ['#311B92', '900'] ] },
+        'Deep Purple': { base: '#673AB7', shades: [ ['#EDE7F6', '50'], ['#D1C4E9', '100'], ['#B39DDB', '200'], ['#9575CD', '300'], ['#795548', '400'], ['#673AB7', '500'], ['#5E35B1', '600'], ['#512DA8', '700'], ['#4527A0', '800'], ['#311B92', '900'] ] },
         'Indigo': { base: '#3F51B5', shades: [ ['#E8EAF6', '50'], ['#C5CAE9', '100'], ['#9FA8DA', '200'], ['#7986CB', '300'], ['#5C6BC0', '400'], ['#3F51B5', '500'], ['#3949AB', '600'], ['#303F9F', '700'], ['#283593', '800'], ['#1A237E', '900'] ] },
         'Blue': { base: '#2196F3', shades: [ ['#E3F2FD', '50'], ['#BBDEFB', '100'], ['#90CAF9', '200'], ['#64B5F6', '300'], ['#42A5F5', '400'], ['#2196F3', '500'], ['#1E88E5', '600'], ['#1976D2', '700'], ['#1565C0', '800'], ['#0D47A1', '900'] ] },
         'Light Blue': { base: '#03A9F4', shades: [ ['#E1F5FE', '50'], ['#B3E5FC', '100'], ['#81D4FA', '200'], ['#4FC3F7', '300'], ['#29B6F6', '400'], ['#03A9F4', '500'], ['#039BE5', '600'], ['#0288D1', '700'], ['#0277BD', '800'], ['#01579B', '900'] ] },
@@ -652,13 +661,11 @@
     const alphaValText = document.getElementById('alphaVal');
     const copyBtn = document.getElementById('copyBtn');
     
-    // عناصر المعاينة
     const mockupAppBar = document.getElementById('mockupAppBar');
     const mockupFab = document.getElementById('mockupFab');
     const mockupTitleText = document.getElementById('mockupTitleText');
     const mockupStatus = document.getElementById('mockupStatus'); 
 
-    // عناصر النافذة المنبثقة للبيكر
     const openPickerBtn = document.getElementById('openPickerBtn');
     const pickerModal = document.getElementById('pickerModal');
     const cpSVBox = document.getElementById('cpSVBox');
@@ -675,20 +682,20 @@
     const cpCancelBtn = document.getElementById('cpCancelBtn');
     const cpConfirmBtn = document.getElementById('cpConfirmBtn');
 
-    // العنصر المسؤول عن لون المتصفح
     const metaThemeColor = document.getElementById('metaThemeColor');
 
     let colorHistory = [];
     let isDarkMode = false; 
     let currentPickerHue = 0;
-    let currentPickerSat = 1; // 0 to 1
-    let currentPickerVal = 1; // 0 to 1
+    let currentPickerSat = 1; 
+    let currentPickerVal = 1; 
     let isDraggingCP = false;
     
-    // متغير لتخزين الفئة الحالية
     let currentCategory = 'Red';
 
-    // --- دالة الربط مع التطبيق ---
+    // متغير مهم لمنع التداخل
+    let isLongPressTriggered = false;
+
     function updateAppTheme(mode) {
         if (typeof AndroidApp !== 'undefined' && AndroidApp !== null) {
             AndroidApp.setStatusBarColor(mode);
@@ -699,7 +706,7 @@
         renderTabs();
 
         const savedTheme = localStorage.getItem('theme');
-        let currentMode = 'light'; // الافتراضي
+        let currentMode = 'light'; 
 
         if (savedTheme === 'dark') {
             isDarkMode = true;
@@ -712,7 +719,6 @@
              currentMode = 'light';
         }
         
-        // --- إرسال الوضع الحالي للتطبيق عند الفتح ---
         updateAppTheme(currentMode);
 
         const savedHistory = localStorage.getItem('colorHistory');
@@ -722,10 +728,9 @@
 
         selectCategory('Red'); 
         manualHex.value = 'F44336';
-        alphaSlider.value = 255;
+        updateTransparency('text'); 
 
         initVisitorCounter();
-        updateTransparency();
     }
 
     function initVisitorCounter() {
@@ -748,15 +753,11 @@
             themeToggle.innerText = '☀️';
             localStorage.setItem('theme', 'dark');
             metaThemeColor.setAttribute('content', '#1e1e1e');
-            
-            // --- إرسال الوضع الليلي للتطبيق ---
             updateAppTheme('dark');
         } else {
             themeToggle.innerText = '🌙';
             localStorage.setItem('theme', 'light');
             metaThemeColor.setAttribute('content', '#ffffff');
-            
-            // --- إرسال الوضع النهاري للتطبيق ---
             updateAppTheme('light');
         }
     });
@@ -764,15 +765,13 @@
     function renderTabs() {
         tabsContainer.innerHTML = '';
         
-        // 1. إضافة زر السجل في البداية مع كلاس خاص
         const historyBtn = document.createElement('div');
-        historyBtn.className = 'tab-btn history-btn'; // إضافة كلاس history-btn
+        historyBtn.className = 'tab-btn history-btn'; 
         historyBtn.innerText = 'Recent';
-        historyBtn.style.backgroundColor = '#9E9E9E'; // لون رمادي محايد
+        historyBtn.style.backgroundColor = '#9E9E9E'; 
         historyBtn.onclick = () => { selectCategory('History'); };
         tabsContainer.appendChild(historyBtn);
 
-        // 2. إضافة باقي الألوان
         for (const [name, data] of Object.entries(materialColors)) {
             const btn = document.createElement('div');
             btn.className = 'tab-btn';
@@ -784,25 +783,55 @@
         }
     }
 
+    function attachLongPress(element, hexToCopy) {
+        let pressTimer;
+        const longPressDuration = 600;
+
+        const startPress = (e) => {
+            isLongPressTriggered = false;
+            if (e.type === 'mousedown' && e.button !== 0) return;
+
+            pressTimer = setTimeout(() => {
+                isLongPressTriggered = true; 
+                
+                navigator.clipboard.writeText(hexToCopy).then(() => {
+                    if(navigator.vibrate) navigator.vibrate(50);
+                    element.classList.add('copy-feedback-success');
+                    setTimeout(() => {
+                        element.classList.remove('copy-feedback-success');
+                    }, 2000);
+                });
+            }, longPressDuration);
+        };
+
+        const cancelPress = (e) => {
+            clearTimeout(pressTimer);
+        };
+
+        element.addEventListener('touchstart', startPress, {passive: true});
+        element.addEventListener('touchend', cancelPress);
+        element.addEventListener('touchmove', cancelPress);
+        element.addEventListener('mousedown', startPress);
+        element.addEventListener('mouseup', cancelPress);
+        element.addEventListener('mouseleave', cancelPress);
+    }
+
     function selectCategory(categoryName) {
-        currentCategory = categoryName; // تحديث الفئة الحالية
+        currentCategory = categoryName; 
         
         document.querySelectorAll('.tab-btn').forEach(b => {
             b.classList.remove('active');
-            // التعامل مع زر السجل الذي يحمل النص العربي
             if(categoryName === 'History' && b.innerText === 'السجل') b.classList.add('active');
             else if(b.innerText === categoryName) b.classList.add('active');
         });
 
         shadesContainer.innerHTML = '';
 
-        // إذا تم اختيار السجل
         if (categoryName === 'History') {
             renderHistoryList();
             return;
         }
 
-        // إذا تم اختيار لون عادي
         const categoryData = materialColors[categoryName];
 
         const baseItem = document.createElement('li');
@@ -811,8 +840,18 @@
         if (categoryData.darkText || categoryName === 'White' || isLightColor(categoryData.base)) {
             baseItem.style.color = '#333';
         }
+        
         baseItem.innerHTML = `<span>${categoryName.toUpperCase()}</span><span class="shade-hex">${categoryData.base}</span>`;
-        baseItem.onclick = () => selectShade(categoryData.base, baseItem);
+
+        attachLongPress(baseItem, categoryData.base);
+
+        baseItem.onclick = (e) => {
+             if(isLongPressTriggered) { 
+                 isLongPressTriggered = false; 
+                 return; 
+             }
+             selectShade(categoryData.base, baseItem);
+        };
         shadesContainer.appendChild(baseItem);
 
         categoryData.shades.forEach(shade => {
@@ -823,24 +862,31 @@
             if (categoryData.darkText || categoryName === 'White' || isLightColor(hex)) {
                 item.style.color = '#333';
             }
+            
             item.innerHTML = `<span>${categoryName} ${label}</span><span class="shade-hex">${hex}</span>`;
-            item.onclick = () => selectShade(hex, item);
+
+            attachLongPress(item, hex);
+
+            item.onclick = (e) => {
+                if(isLongPressTriggered) { 
+                    isLongPressTriggered = false; 
+                    return; 
+                }
+                selectShade(hex, item);
+            };
             shadesContainer.appendChild(item);
         });
     }
 
     function renderHistoryList() {
-        // --- تعديل: إضافة زر مسح السجل في البداية ---
         const clearBtnLi = document.createElement('li');
         clearBtnLi.className = 'shade-item';
         clearBtnLi.style.backgroundColor = '#fff';
         clearBtnLi.style.color = '#D32F2F';
         clearBtnLi.style.justifyContent = 'center';
         clearBtnLi.style.fontWeight = 'bold';
-        // تعديل: تغيير الحدود لتكون في الأسفل لأن الزر صار في الأعلى
         clearBtnLi.style.borderBottom = '1px solid #ddd'; 
         
-        // تعديل بسيط للوضع الليلي لزر المسح
         if (isDarkMode) {
             clearBtnLi.style.backgroundColor = '#333';
             clearBtnLi.style.color = '#EF5350';
@@ -852,11 +898,10 @@
             if(confirm('هل أنت متأكد من مسح كل السجل؟')) {
                 localStorage.removeItem('colorHistory');
                 colorHistory = [];
-                renderHistoryList(); // إعادة رسم القائمة وهي فارغة
+                renderHistoryList(); 
             }
         };
         shadesContainer.appendChild(clearBtnLi);
-        // -------------------------------------------
 
         if (colorHistory.length === 0) {
             const emptyMsg = document.createElement('li');
@@ -871,9 +916,8 @@
         colorHistory.forEach(item => {
             const li = document.createElement('li');
             li.className = 'shade-item';
-            li.style.backgroundColor = item.rgba; // استخدام RGBA لإظهار الشفافية
+            li.style.backgroundColor = item.rgba; 
             
-            // تحديد لون النص بناءً على سطوع اللون الأساسي
             if (isLightColor(item.baseHex || '#FFFFFF')) {
                 li.style.color = '#333';
             } else {
@@ -881,11 +925,18 @@
             }
 
             li.innerHTML = `<span>${item.hex}</span><span class="shade-hex">Alpha: ${item.alphaVal}</span>`;
-            li.onclick = () => {
+
+            attachLongPress(li, item.hex);
+
+            li.onclick = (e) => {
+                if(isLongPressTriggered) { 
+                    isLongPressTriggered = false; 
+                    return; 
+                }
+
                 manualHex.value = item.baseHex;
                 alphaSlider.value = item.alphaVal;
-                updateTransparency();
-                // تأثير بصري عند النقر
+                updateTransparency('text');
                 li.style.opacity = '0.5';
                 setTimeout(()=> li.style.opacity = '1', 100);
             };
@@ -896,7 +947,7 @@
     function selectShade(hex, element) {
         manualHex.value = hex.replace('#', '');
         alphaSlider.value = 255; 
-        updateTransparency();
+        updateTransparency('text');
         addToHistory();
         element.style.opacity = '0.5';
         setTimeout(()=> element.style.opacity = '1', 100);
@@ -911,31 +962,45 @@
         return (yiq >= 200);
     }
 
-    function updateTransparency() {
+    function updateTransparency(source) {
         let rawInput = manualHex.value.trim().toUpperCase();
         let cleanHex = rawInput.replace(/#/g, '');
+        let colorPart = "";
 
         if (cleanHex.length === 8) {
-            let alphaPart = cleanHex.substring(0, 2);
-            let colorPart = cleanHex.substring(2, 8);
-
-            let alphaVal = parseInt(alphaPart, 16);
-            if (!isNaN(alphaVal)) {
-                alphaSlider.value = alphaVal;
-            }
-
-            manualHex.value = colorPart; 
-            cleanHex = colorPart;
+            colorPart = cleanHex.substring(2, 8);
+        } else if (cleanHex.length === 6) {
+            colorPart = cleanHex;
+        } else {
+            if(cleanHex.length < 3) return; 
+            colorPart = cleanHex; 
         }
 
-        if (cleanHex.length < 3) return;
-
-        let hexForCalc = cleanHex.substring(0, 6);
-        while(hexForCalc.length < 6) { hexForCalc += "0"; }
-
+        if (source === 'text') {
+            if (cleanHex.length === 8) {
+                let alphaVal = parseInt(cleanHex.substring(0, 2), 16);
+                if (!isNaN(alphaVal)) alphaSlider.value = alphaVal;
+                
+                // === التعديل الجوهري: تنظيف الحقل من الشفافية والشباك فوراً ===
+                manualHex.value = colorPart;
+            } 
+            else if (cleanHex.length === 6) {
+                alphaSlider.value = 255;
+                if (rawInput.includes('#')) manualHex.value = cleanHex;
+            }
+        } 
+        
         let alpha = parseInt(alphaSlider.value);
         let alphaHex = alpha.toString(16).toUpperCase();
         if (alphaHex.length === 1) alphaHex = "0" + alphaHex;
+
+        let hexForCalc = colorPart;
+        while(hexForCalc.length < 6) { hexForCalc += "0"; }
+        hexForCalc = hexForCalc.substring(0, 6);
+
+        if (source === 'slider') {
+            manualHex.value = alphaHex + hexForCalc;
+        }
 
         alphaValText.innerText = alpha;
         hexResult.innerText = "#" + alphaHex + hexForCalc;
@@ -959,6 +1024,7 @@
         resetCopyBtn();
     }
 
+
     function addToHistory() {
         let currentFullHex = hexResult.innerText;
         let cleanHex = manualHex.value.replace(/#/g,'').substring(0,6);
@@ -979,12 +1045,10 @@
             baseHex: cleanHex
         });
 
-        // زيادة عدد العناصر المحفوظة قليلاً بما أنها صارت قائمة
         if (colorHistory.length > 15) colorHistory.pop();
         
         localStorage.setItem('colorHistory', JSON.stringify(colorHistory));
         
-        // إذا كان المستخدم فاتح تبويب السجل، نحدث القائمة فوراً
         if (currentCategory === 'History') {
             renderHistoryList();
         }
@@ -1005,8 +1069,8 @@
         }).catch(err => console.error('فشل النسخ', err));
     });
 
-    manualHex.addEventListener('input', updateTransparency);
-    alphaSlider.addEventListener('input', updateTransparency);
+    manualHex.addEventListener('input', function() { updateTransparency('text'); });
+    alphaSlider.addEventListener('input', function() { updateTransparency('slider'); });
 
     /* =========================================
        MATH-BASED HSV COLOR PICKER LOGIC
@@ -1183,7 +1247,7 @@
 
     cpConfirmBtn.addEventListener('click', () => {
         manualHex.value = cpPreviewHex.innerText.replace('#', '');
-        updateTransparency();
+        updateTransparency('text');
         addToHistory();
         pickerModal.classList.remove('active');
     });
