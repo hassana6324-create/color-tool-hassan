@@ -292,6 +292,8 @@
             align-items: center;
             justify-content: center;
             font-size: 1em; 
+            /* --- التعديل هنا: فرض الاتجاه من اليسار لليمين --- */
+            direction: ltr !important; 
         }
 
         .input-tools-row {
@@ -396,21 +398,18 @@
 
         .shades-list { flex: 1; overflow-y: auto; padding: 0; margin: 0; list-style: none; }
         
-        /* --- ستايل العنصر العادي --- */
         .shade-item {
             display: flex; justify-content: space-between; align-items: center;
             padding: 15px 20px; color: white; cursor: pointer; font-weight: 500;
             border-bottom: 1px solid rgba(0,0,0,0.05); direction: ltr;
-            transition: background-color 0.2s; /* مهم للانيميشن */
+            transition: background-color 0.2s; 
         }
         
-        /* --- كلاس الانيميشن عند النسخ (مثل موقعك الثاني) --- */
         .copy-feedback-success {
-            background-color: #4CAF50 !important; /* خلفية خضراء */
-            color: #ffffff !important;           /* نص أبيض */
+            background-color: #4CAF50 !important; 
+            color: #ffffff !important;           
             border-color: #388E3C !important;
         }
-        /* اجبار العناصر الداخلية انها تصير بيضاء */
         .copy-feedback-success span {
             color: #ffffff !important;
         }
@@ -693,7 +692,6 @@
     
     let currentCategory = 'Red';
 
-    // متغير مهم لمنع التداخل
     let isLongPressTriggered = false;
 
     function updateAppTheme(mode) {
@@ -981,7 +979,6 @@
                 let alphaVal = parseInt(cleanHex.substring(0, 2), 16);
                 if (!isNaN(alphaVal)) alphaSlider.value = alphaVal;
                 
-                // === التعديل الجوهري: تنظيف الحقل من الشفافية والشباك فوراً ===
                 manualHex.value = colorPart;
             } 
             else if (cleanHex.length === 6) {
@@ -998,8 +995,10 @@
         while(hexForCalc.length < 6) { hexForCalc += "0"; }
         hexForCalc = hexForCalc.substring(0, 6);
 
+        // --- التعديل هنا: منع تحديث الحقل عند تحريك الشريط ---
         if (source === 'slider') {
-            manualHex.value = alphaHex + hexForCalc;
+            // نبقي القيمة 6 ارقام كما هي بدون اضافة الشفافية
+            manualHex.value = hexForCalc;
         }
 
         alphaValText.innerText = alpha;
